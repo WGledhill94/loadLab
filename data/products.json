@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Headphones",
+    "description": "High-quality wireless headphones with noise cancellation",
+    "price": 199.99,
+    "category": "Electronics",
+    "image": "https://via.placeholder.com/300x300?text=Headphones",
+    "stock": 50
+  },
+  {
+    "id": 2,
+    "name": "Running Shoes",
+    "description": "Comfortable running shoes for daily exercise",
+    "price": 89.99,
+    "category": "Sports",
+    "image": "https://via.placeholder.com/300x300?text=Shoes",
+    "stock": 30
+  },
+  {
+    "id": 3,
+    "name": "Coffee Maker",
+    "description": "Automatic coffee maker with programmable timer",
+    "price": 129.99,
+    "category": "Home",
+    "image": "https://via.placeholder.com/300x300?text=Coffee",
+    "stock": 25
+  },
+  {
+    "id": 4,
+    "name": "Smartphone",
+    "description": "Latest smartphone with advanced camera features",
+    "price": 699.99,
+    "category": "Electronics",
+    "image": "https://via.placeholder.com/300x300?text=Phone",
+    "stock": 40
+  },
+  {
+    "id": 5,
+    "name": "Yoga Mat",
+    "description": "Non-slip yoga mat for home workouts",
+    "price": 29.99,
+    "category": "Sports",
+    "image": "https://via.placeholder.com/300x300?text=Yoga",
+    "stock": 60
+  },
+  {
+    "id": 6,
+    "name": "Desk Lamp",
+    "description": "LED desk lamp with adjustable brightness",
+    "price": 49.99,
+    "category": "Home",
+    "image": "https://via.placeholder.com/300x300?text=Lamp",
+    "stock": 35
+  },
+  {
+    "id": 7,
+    "name": "Laptop",
+    "description": "High-performance laptop for work and gaming",
+    "price": 1299.99,
+    "category": "Electronics",
+    "image": "https://via.placeholder.com/300x300?text=Laptop",
+    "stock": 20
+  },
+  {
+    "id": 8,
+    "name": "Water Bottle",
+    "description": "Insulated water bottle keeps drinks cold for 24 hours",
+    "price": 24.99,
+    "category": "Sports",
+    "image": "https://via.placeholder.com/300x300?text=Bottle",
+    "stock": 80
+  }
+]
