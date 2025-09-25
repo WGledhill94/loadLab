@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Product, Filters } from '../types';
 
-function ProductList({ addToCart }) {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [filters, setFilters] = useState({
+interface ProductListProps {
+  addToCart: (product: Product) => void;
+}
+
+const ProductList: React.FC<ProductListProps> = ({ addToCart }) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [filters, setFilters] = useState<Filters>({
     search: '',
     category: '',
     minPrice: '',
@@ -20,30 +25,30 @@ function ProductList({ addToCart }) {
     fetchProducts();
   }, [filters]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (): Promise<void> => {
     try {
       const params = new URLSearchParams();
       Object.entries(filters).forEach(([key, value]) => {
         if (value) params.append(key, value);
       });
       
-      const response = await axios.get(`/api/products?${params}`);
+      const response = await axios.get<Product[]>(`/api/products?${params}`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     }
   };
 
-  const fetchCategories = async () => {
+  const fetchCategories = async (): Promise<void> => {
     try {
-      const response = await axios.get('/api/categories');
+      const response = await axios.get<string[]>('/api/categories');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
   };
 
-  const handleFilterChange = (key, value) => {
+  const handleFilterChange = (key: keyof Filters, value: string): void => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 
@@ -103,6 +108,6 @@ function ProductList({ addToCart }) {
       </div>
     </div>
   );
-}
+};
 
 export default ProductList;

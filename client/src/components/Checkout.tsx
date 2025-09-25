@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { CartItem, User, CustomerInfo, PaymentInfo } from '../types';
 
-function Checkout({ cart, user, setCart }) {
-  const [customerInfo, setCustomerInfo] = useState({
+interface CheckoutProps {
+  cart: CartItem[];
+  user: User | null;
+  setCart: (cart: CartItem[]) => void;
+}
+
+const Checkout: React.FC<CheckoutProps> = ({ cart, user, setCart }) => {
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: user?.name || '',
     email: user?.email || '',
     address: '',
     city: '',
     zipCode: ''
   });
-  const [paymentInfo, setPaymentInfo] = useState({
+  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>({
     cardNumber: '',
     expiryDate: '',
     cvv: ''
   });
-  const [isGuest, setIsGuest] = useState(!user);
-  const [processing, setProcessing] = useState(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setProcessing(true);
 
@@ -32,7 +38,7 @@ function Checkout({ cart, user, setCart }) {
         paymentInfo: { ...paymentInfo, cardNumber: '**** **** **** ' + paymentInfo.cardNumber.slice(-4) }
       };
 
-      const response = await axios.post('/api/checkout', orderData);
+      const response = await axios.post<{ orderId: string }>('/api/checkout', orderData);
       
       alert(`Order confirmed! Order ID: ${response.data.orderId}`);
       setCart([]);
@@ -193,6 +199,6 @@ function Checkout({ cart, user, setCart }) {
       </div>
     </div>
   );
-}
+};
 
 export default Checkout;

@@ -6,11 +6,12 @@ import Cart from './components/Cart';
 import Login from './components/Login';
 import Register from './components/Register';
 import Checkout from './components/Checkout';
+import { User, CartItem, Product } from './types';
 
-function App() {
-  const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [cartOpen, setCartOpen] = useState(false);
+function App(): JSX.Element {
+  const [user, setUser] = useState<User | null>(null);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,7 +22,7 @@ function App() {
     }
   }, []);
 
-  const addToCart = (product) => {
+  const addToCart = (product: Product): void => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {
@@ -35,11 +36,11 @@ function App() {
     });
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId: number): void => {
     setCart(prev => prev.filter(item => item.id !== productId));
   };
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId: number, quantity: number): void => {
     if (quantity === 0) {
       removeFromCart(productId);
       return;
@@ -49,7 +50,7 @@ function App() {
     ));
   };
 
-  const logout = () => {
+  const logout = (): void => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     delete axios.defaults.headers.common['Authorization'];

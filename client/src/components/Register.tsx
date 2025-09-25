@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { User } from '../types';
 
-function Register({ setUser }) {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const [error, setError] = useState('');
+interface RegisterProps {
+  setUser: (user: User) => void;
+}
+
+interface RegisterFormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const Register: React.FC<RegisterProps> = ({ setUser }) => {
+  const [formData, setFormData] = useState<RegisterFormData>({ name: '', email: '', password: '' });
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/register', formData);
+      const response = await axios.post<{ token: string; user: User }>('/api/register', formData);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -19,7 +30,7 @@ function Register({ setUser }) {
       
       setUser(user);
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       setError(error.response?.data?.error || 'Registration failed');
     }
   };
@@ -67,6 +78,6 @@ function Register({ setUser }) {
       </button>
     </form>
   );
-}
+};
 
 export default Register;

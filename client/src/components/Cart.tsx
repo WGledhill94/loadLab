@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CartItem } from '../types';
 
-function Cart({ cart, isOpen, onClose, updateQuantity, removeFromCart }) {
+interface CartProps {
+  cart: CartItem[];
+  isOpen: boolean;
+  onClose: () => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: number) => void;
+}
+
+const Cart: React.FC<CartProps> = ({ cart, isOpen, onClose, updateQuantity, removeFromCart }) => {
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
@@ -76,6 +85,6 @@ function Cart({ cart, isOpen, onClose, updateQuantity, removeFromCart }) {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

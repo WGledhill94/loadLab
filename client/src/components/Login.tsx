@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { User } from '../types';
 
-function Login({ setUser }) {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+interface LoginProps {
+  setUser: (user: User) => void;
+}
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC<LoginProps> = ({ setUser }) => {
+  const [formData, setFormData] = useState<LoginFormData>({ email: '', password: '' });
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', formData);
+      const response = await axios.post<{ token: string; user: User }>('/api/login', formData);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -19,7 +29,7 @@ function Login({ setUser }) {
       
       setUser(user);
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       setError(error.response?.data?.error || 'Login failed');
     }
   };
@@ -56,6 +66,6 @@ function Login({ setUser }) {
       </button>
     </form>
   );
-}
+};
 
 export default Login;
